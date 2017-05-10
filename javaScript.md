@@ -274,6 +274,7 @@ bar();
 
 >在一个函数上下文中，this由调用者提供，由调用函数的方式来决定。如果调用者函数，被某一个对象所拥有，那么该函数在调用时，内部的this指向该对象。如果函数独立调用，那么该函数内部的this，则指向undefined。但是在非严格模式中，当this指向undefined时，它会被自动指向全局对象。
 
+### 作为方法调用
 ```javascript
 //例子1
 var name="XL";
@@ -304,6 +305,26 @@ personB.showNameB();
 //xl --因为showNameA是在personB中进行调用的所以this指向的是personB
 
 ```
+
+
+### 作为构造函数调用
+```javascript
+var name='XL'
+function  Person(){
+    this.name='xl';
+}
+var personA=Person();
+console.log(personA.name); 
+console.log(window.name);
+
+    
+var personB=new Person("xl");
+console.log(personB.name);
+
+
+```
+
+
 
 
 
