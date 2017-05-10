@@ -269,9 +269,41 @@ bar();
 ![error_Scope](img/error_Scope.png)<br>
 
 
+## this
+>this的指向是在调用时确定的。
 
+>在一个函数上下文中，this由调用者提供，由调用函数的方式来决定。如果调用者函数，被某一个对象所拥有，那么该函数在调用时，内部的this指向该对象。如果函数独立调用，那么该函数内部的this，则指向undefined。但是在非严格模式中，当this指向undefined时，它会被自动指向全局对象。
 
+```javascript
+//例子1
+var name="XL";
+var person={
+    name:"xl",
+    showName:function(){
+        console.log(this.name);
+    }
+}
+person.showName();//xl  --因为person去调用showName所以this指向person
 
+var showNameA=person.showName;
+showNameA();   //XL --因为是showNameA去调用showName的,showNameA是在window下 所以this指向window 
+
+//例子2
+var personA={
+    name:'XL',
+    showNameA:function(){
+        console.log(this.name);
+    }
+}
+
+var personB={
+    name:'xl',
+    showNameB:personA.showNameA
+}
+personB.showNameB();
+//xl --因为showNameA是在personB中进行调用的所以this指向的是personB
+
+```
 
 
 
