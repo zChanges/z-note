@@ -309,29 +309,126 @@ personB.showNameB();
 
 ### 作为构造函数调用
 ```javascript
-var name='XL'
-function  Person(){
+var name ="XL"
+function  Person(name){
     this.name='xl';
 }
 var personA=Person();
-console.log(personA.name); 
-console.log(window.name);
+// console.log(window.name);//xl
+// console.log(personA.name)//报错
+//当personA去调用Person()指向的是window所以this.name就是window.name，重新赋值了name=xl而不是XL
 
-    
-var personB=new Person("xl");
-console.log(personB.name);
+var personB=new Person();
+console.log(personB.name);//xl
+//new操作符会实例化对象。
 
+```
+### new操作符
+>先创建一个空对象o，将o的原型链继承fn的原型
+>用`call`或`apply`把fn的this重新指向为o,即完成o.name=name操作
 
+```
+new操作符调用构造函数会经历4个阶段
+1.创建一个新对象。
+2.将构造函数的this指向这个新对象
+3.指向构造函数的代码，为这个对象添加属性，方法。
+4.返回新对象
+```
+
+```javascript
+//模拟new操作符
+function newperson(fn,arg){
+    var o = {};
+    o.__proto__=fn.prototype
+    fn.call(o,arg);
+    return o;
+}
+var name = "XL"
+function  Person(name){
+    this.name = 'xl';
+}
+var p = newperson(Person);
+console.log(p.name);//xl
+```
+
+### call/apply方法
+>用处：主要用来改变`this`的指向<br>
+>区别：`call`是一个一个的传递，`apply`是以数组形式传递
+
+```javascript
+ var name = 'XL';
+  var person = {
+      name:"xl",
+      changeName:function(){
+          console.log(this.name)
+      }
+  }
+ var p = person.changeName;
+ p();//XL  全局window下
+ p.call(person)//xl  this重新指向为person
 ```
 
 
+>超时调用的代码`setTimeout`和`setInnerval`都是在`window`下运行。非严格模式指向的是window，严格模式下指向undefined；
+```javascript
+function newbind (fn,obj){
+    return fn.apply(obj,arguments);
+}
+
+var a = 10;
+var obj = {
+    a: 20,
+    getA: function() {
+        setTimeout(newbind(function() {
+            console.log(this.a)
+        },this), 1000)
+    }
+}
+
+obj.getA();//10
+
+//newbind通过apply吧this指向obj。输出10;
+```
+
+通过apply\call实现继承
+```javascript
+var father = function(work,sex){
+    this.work = work;
+    this.sex = sex;
+    this.hello = function(){
+        console.log(this.work,this.sex,"hello");
+    }
+}
+var son = function(name,sex,height){
+    father.apply(this,arguments);
+    this.height=height;
+}
+
+son.prototype.message = function(){
+    console.log(this.work,this.sex,this.height);
+}
+
+var son = new son('zz','man',180);
+son.message();//zz man 180
+son.hello();//zz man hello
+
+```
+<b>借助apply方法,将父及的构造函数指向一次，相当于将两father中的代码,在son中复制一份,其中this的指向为son中new出来的实例对象</b>
 
 
+## 函数参数传递方式:按值传递
+>函数参数在进入函数时，实际是被保存在了函数的变量对象中，因此，这个时候发生了一次复制。
 
-
-
-
-
-
-
-
+传入参数是按值传递，而不是引用传递，只不过传递一个引用类型时，传递的是引用类型保存在变量中的引用（指针）而已。
+```javascript
+var person = {
+    name:'aa'
+}
+function setName(obj){
+    obj = {};//将传入的引用指向另外一个值
+    obj.name = 'bb';
+}
+setName(person);
+person.name;//aa
+```
+如果是引用传递的话name会被改变成bb，在这里将obj的引用执行了一个{}所以obj.name='bb' 是不会影响到person.name的
