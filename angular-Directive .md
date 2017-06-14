@@ -344,3 +344,128 @@ export class ViewChildComponent implements OnInit, AfterViewInit {
 
 
 
+
+## HostListener @ HostBinding
+>HostBinding 为宿主元素添加监听事件 （应用指令的元素就是宿主元素）
+
+>HostBinding 动态的设置宿主元素的属性值。（添加attr、class）
+
+
+通过`HostListener`添加事件并监听;鼠标移入通过`HostBinding`动态的给宿主添加class和attr
+
+```typescript
+import { Directive, Input, ElementRef, Renderer2, HostListener, HostBinding } from '@angular/core';
+
+@Directive({
+  selector: '[zBtn]',
+})
+export class ZBtnDirective {
+  private defaultColor = 'yellow';
+  @Input('zBtn') zColor: string;
+  constructor(private elementRef: ElementRef, private renderer: Renderer2) { }
+
+  @HostBinding('attr.role') role = 'btn';
+  @HostBinding('class.pressed') isPressed: boolean;
+
+  @HostListener('mouseover')
+  mouseoverBtn() {  // 监听鼠标移入事件
+    this.isPressed = true;
+  }
+
+  @HostListener('mouseout')
+  mouseoutBtn() {  // 监听鼠标移出事件
+    this.isPressed = false;
+  }
+}
+```
+```class
+.pressed {
+    color: #fff;
+}
+```
+```html
+<p zBtn>
+  z-directive works!
+</p>
+```
+<b>通过`hostBinding`动态的添加了`class`和`attr`</b>
+![stack](img/angular/hostBinding.png)<br>
+
+
+
+
+
+
+## 组件之间通讯方式
+
+### 输入属性（父 => 子）
+<b>通过`[count]`初始化count</b>
+```typescript
+//子
+@Component({
+    selector: 'exe-counter',
+    template: `
+      <p>当前值: {{ count }}</p>
+      <button (click)="add()"> + </button>
+    `
+})
+export class CounterComponent {
+    @Input() count: number = 0;
+    add() {
+        this.count++;
+    }
+}
+//父
+@Component({
+  selector: 'exe-app',
+  template: `
+   <exe-counter [count]="initialCount"></exe-counter>
+  `
+})
+export class AppComponent {
+  initialCount: number = 5;
+}
+```
+
+
+###　输出属性（子　＝＞　父）
+<b>通过`EventEmitter`的`emit`向父传递数据</b>
+```typescript
+子：
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
+@Component({
+    selector: 'exe-counter',
+    template: `
+      <p>当前值: {{ count }}</p>
+      <button (click)="increment()"> + </button>
+    `
+})
+export class CounterComponent {
+    @Input() count: number = 0;
+    @Output() change: EventEmitter<number> = new EventEmitter<number>();
+    increment() {
+        this.count++;
+        this.change.emit(this.count);
+    }
+}
+
+父：
+@Component({
+  selector: 'exe-app',
+  template: `
+   <p>{{changeMsg}}</p> 
+   <exe-counter [count]="initialCount" 
+    (change)="countChange($event)"></exe-counter>
+  `
+})
+export class AppComponent {
+  initialCount: number = 5;
+  changeMsg: string;
+  countChange(event: number) {
+    this.changeMsg = `子组件change事件已触发，当前值是: ${event}`;
+  }
+}
+```
+
+### 模板变量
