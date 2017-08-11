@@ -3,7 +3,7 @@
 ## 栈 （栈内存）
 > `栈-stack：为自动分配的内存空间，它由系统自动释放`<br>
 
-![stack](img/stack.png)<br>
+![stack](/img/stack.png)<br>
  栈是一种特殊的线性表，限定删除和插入数据元素只能7在一端进行。<br>
  如球盒一样,第一个放入的球在栈底,最后一个球放入的在栈顶,如需拿到第一个放入的求,只能从栈顶一个一个拿出到达栈底。<br>
  栈空间：<b>先进后出、后进先出——Last in Fist out (LIFO)线性表</b>
@@ -98,7 +98,7 @@ changeName();
 6.就只剩下全局全局上下文了，全局上下文在浏览器窗口关闭后出栈。
 ```
 <b>每次某个函数被调用，就会有新的执行上下文创建，即使是调用自身函数</b>
-![call_stack](img/call_stack.png)<b>
+![call_stack](/img/call_stack.png)<b>
 
 ## 执行上下文生命周期
 >创建阶段：创建变量对象、建立作用域、this的指向z
@@ -107,7 +107,7 @@ changeName();
 
 <b>知识点：1.变量对象 2.作用域链 3.this</b>
 
-![life_cycle](img/life_cycle.png)<br>
+![life_cycle](/img/life_cycle.png)<br>
 
 ### 变量对象
 创建变量对象=><br>
@@ -116,7 +116,7 @@ changeName();
 2.检查上下文的函数声明,function关键字，在变量中以函数名建立个属性，属性值指向该函数所在的内存空间,如果函数属性已经存在，那么这个函数会被新的覆盖<br>
 
 3.检查上下文中的变量声明，找到一个,就在变量对象中建立个属性，值未undefined,如果属性已经存在,为了防止同名函数被修改成undefined,则会跳过。原属性不会覆盖。<br>
-![vo](img/vo.png)<br>
+![vo](/img/vo.png)<br>
 
 ```javascript
 function test() {
@@ -210,7 +210,7 @@ innerTestEC = {
 }
 
 ```
-![scope](img/scope.png)<br>
+![scope](/img/scope.png)<br>
 >例子中，全局、函数test、函数innerTest的执行上下文先后被创建
 
 ## 垃圾回收
@@ -247,7 +247,7 @@ innnerFoo = {
 // 通过fn=innnerFoo 将innnerFoo的作用域链保存到全局变量fn中。
 // 所以在后面bar()时，fn照样能访问foo中的局部变量a
 ```
-![innerfoo_Scope](img/innerfoo_Scope.png)<br>
+![innerfoo_Scope](/img/innerfoo_Scope.png)<br>
 <b>所以通过闭包,我们可以在其他执行上下文中，访问到函数内部变量</b>就是在bar执行上下文中能访问到foo的a变量.
 
 >虽然闭包被保存到全局变量中，但是作用域链并不会发生改变,在闭包中能访问到的变量,仍然还是作用域链上能查到的变量
@@ -270,7 +270,7 @@ function bar() {
 foo();
 bar();
 ```
-![error_Scope](img/error_Scope.png)<br>
+![error_Scope](/img/error_Scope.png)<br>
 
 <b>闭包例子：</b>
 ```javascript

@@ -201,7 +201,7 @@ var p1 = new Person("aa",20);
 var p2 = new Person("bb",30);
 console.log(p1.getName === p2.getName);
 ```
-![prototype](img/prototype.png)<br>
+![prototype](/img/prototype.png)<br>
 
 
 ### 继承
@@ -224,7 +224,7 @@ var p1 = son.prototype = new Person("aa",1,2)
 p1.getName();
 ```
 <b>原型的继承，只需要将子及的原型对象设置为父级的一个实例，加入原型链中</b>
-![inherit](img/inherit.png)<br>
+![inherit](/img/inherit.png)<br>
 
 
 
@@ -283,7 +283,7 @@ IO设备和用户参数的操作如如点击鼠标，页面滚动，只要指定
 `macro-task 宏任务--script整体代码、settimeout、setinterval……`
 `micro-task 微任务--process.nextTick、Promoise……`
 
-![taskqueue](img/taskqueue.png)<br>
+![taskqueue](/img/taskqueue.png)<br>
 
 
 ```javascript

@@ -111,7 +111,7 @@ export class ZBtnDirective {
 1.`ViewContainerRef`主要用来创建和管理内嵌视图或组件视图的。
 
 2.`TemplateRef` 通过TemplateRef实例方面创建内嵌视图,能轻松的访问通过ELenentRef封装后的nativeElement。组件视图中的templatem模板元素,经过渲染后会替换成comment元素
-![stack](img/angular/nativeElement.png)<br>
+![stack](/img/angular/nativeElement.png)<br>
 
 ```javascript
 import { Component, OnInit, TemplateRef, AfterViewInit, ViewChild, ViewContainerRef } from '@angular/core';
