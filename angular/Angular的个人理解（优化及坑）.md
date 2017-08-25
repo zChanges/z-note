@@ -366,5 +366,5 @@ export class BDemoComponent implements DoCheck, OnChanges {
   [3]: https://angular.io/api/core/ChangeDetectorRef
   [4]: http://static.zybuluo.com/zChange/fts5z0tsaqvpsnv3gdvyuclg/aDemo.gif
   [5]: https://github.com/zChanges/chrysalis-ng#components
-  [6]: https://github.com/zChanges/z-note/blob/master/javaScript.md
-  [7]: https://github.com/zChanges/z-note/blob/master/javaScript.1.md
+  [6]: https://github.com/zChanges/z-note/blob/master/Javascript/javaScript.md
+  [7]: https://github.com/zChanges/z-note/blob/master/Javascript/javaScript.1.md
