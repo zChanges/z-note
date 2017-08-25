@@ -186,7 +186,16 @@ app.controller("InnerCtrl", ["$scope", function($scope) {
     </div>
 </div> 
 ```
-3.脏值检查的利弊。
+
+**合并http请求**
+每次调用接口，值返回后angular就会触发脏检查，刚进页面不可能只掉用一个接口，所以可以等几个接口返回后在触发脏值检查，这时候就可以`$httpProvider` 的 `useApplyAsync` 方法，他通过`$rootScope.$applyAsync`吧同一时间（10s左右）的返回值合到一起处理；
+```typescript
+app.config(function ($httpProvider) {
+  $httpProvider.useApplyAsync(true)
+})
+```
+
+**脏值检查的利弊。**
 
     <span>{{num}}</span>
 ```javascript
